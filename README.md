@@ -1,3 +1,3 @@
 # Genetic
 
-![](100_points.gif)
+![](100points.gif)
