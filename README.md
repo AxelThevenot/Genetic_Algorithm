@@ -25,12 +25,14 @@ The selection process in an algorithm can be done by several ways :
 * Elitism : The easiest way to do the selection. It takes the k-bests individuals of the generation.
 * There is [more diffrent process](https://fr.slideshare.net/riyadparvez/selection-in-evolutionary-algorithm) of course.
 
-crossover
+The crossover or recombination is the process of creating a child from the genetic information of the parents. I'm not going to shock you by telling you that there are still many ways to create this process.
+* The crossover is usually made from 2 parents but it is also possible to make it with k-parents
+* One point crossover : choose a limit point (randomly or not) and take the genetic information from the first parent until the limit point chosen. Then add the the genetic information of the second parent starting to the same limit point. To a better understanding you can see the diagram above.
+* K-points crossover : it works similarly but their is k limit points and the child is created by alternating the genetic information of each parent.
+* Uniform crossover : for each gene, the uniform crossover randomly choose the first parent one or the second parent one.
 
-mutation
 
-
-.
+The last process is the mutation. There is also different cases depending of the individuals. It can randomly replace a gene by an other or interchanges genes.
 
 ## Biology in our program
 
