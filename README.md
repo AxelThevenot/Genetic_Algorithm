@@ -13,18 +13,22 @@ The [Travelling Salesman Problem](https://en.wikipedia.org/wiki/Travelling_sales
 
 As I said, the GA are evoultionnary algorithms inspired by the biology. The principles of population evolution are selection the crossover and mutation. The selection in a real life population is the natural selection. The "best" individuals give their genes to their children and they form the new generation and this process is repeated. That is on this point the GA algorithms are inspired by the evolutionnary principles. 
 
-selection paragraph :
-* Proportionate to the cost/fitness
-* rank
-* by tournament
-* uniform
-* elitism 
+To answer a problem, each individual has a cost or a fitness. These two are similar in inherently but different in the way we see them. For example in the TSP case, we well talk about costs as we are interested in how much the route costs (in distance). On the contrary, in a craking-password case, we will be interested in how much the string found fits with the password, so we talk about fitness.
+
+![](Evolution.png)
+
+First of all there is the selection process. It is a selection according to the best individuals of a generation.
+The selection process in an algorithm can be done by several ways :
+* Proportionate to the cost/fitness : each individual has a weight proportionate to its cost or fitness. The selection is done by choosing randmly individuals according to their weigth. It is an usual way to do the selection. Yet this selection process in some case can approach [local extrema](https://thinkingandcomputing.com/posts/genetic-algorithms-neural-networks.html) without reaching the global one.
+* Proportionate to the rank : this process is really similar to the previous one. It sorts the individuals according to their cost or fitness. The each individuals has a weight proportionate to their rank. The worst has a 1 weight, the second worst has a 2 weight, ..., the best has a N weight.
+* By tournament : laucnch several tournaments of size k composed by random individuals of the generation. Take the firsts. The advantage of this method is that it can work on parallel architectures.
+* Elitism : The easiest way to do the selection. It takes the k-bests individuals of the generation.
+* There is [more diffrent process](https://fr.slideshare.net/riyadparvez/selection-in-evolutionary-algorithm) of course.
 
 crossover
 
 mutation
 
-![](Evolution.png)
 
 .
 
