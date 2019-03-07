@@ -19,7 +19,7 @@ To answer a problem, each individual has a cost or a fitness. These two are simi
 
 First of all there is the selection process. It is a selection according to the best individuals of a generation.
 The selection process in an algorithm can be done by several ways :
-* Proportionate to the cost/fitness : each individual has a weight proportionate to its cost or fitness. The selection is done by choosing randmly individuals according to their weigth. It is an usual way to do the selection. Yet this selection process in some case can approach [local extrema](https://thinkingandcomputing.com/posts/genetic-algorithms-neural-networks.html) without reaching the global one.
+* Proportionate to the cost/fitness : each individual has a weight proportionate to its cost or fitness. The selection is done by choosing randmly individuals according to their weigth. It is an usual way to do the selection. Yet this selection process in some case can approach [local optimum](https://thinkingandcomputing.com/posts/genetic-algorithms-neural-networks.html) without reaching the global one.
 * Proportionate to the rank : this process is really similar to the previous one. It sorts the individuals according to their cost or fitness. The each individuals has a weight proportionate to their rank. The worst has a 1 weight, the second worst has a 2 weight, ..., the best has a N weight.
 * By tournament : laucnch several tournaments of size k composed by random individuals of the generation. Take the firsts. The advantage of this method is that it can work on parallel architectures.
 * Elitism : The easiest way to do the selection. It takes the k-bests individuals of the generation.
@@ -42,20 +42,24 @@ population paragraph
 
 cost or fitness ? paragraph
 
-En théorie : une population ne peut tomber dans un optimum
-local indéfiniment si des individus aléatoirement sélectionnés
-sont ajoutés à chaque génération.
-En pratique : On considère qu'une population a convergé s'il n'y
-a plus d'amélioration après quelques générations. On peut
-relancer plusieurs populations et vérifier (ou non) la stabilité des
-meilleurs individus obtenus
 
 mutation paragraphe
 
-## Pseudo Code
-![To inspire the pseudo code](https://www.google.com/search?q=*+selection+*+crossover+*+mutation&rlz=1C1CHBF_frFR699FR699&source=lnms&tbm=isch&sa=X&ved=0ahUKEwibw7O00-7gAhWSz4UKHZdECyoQ_AUIDigB&biw=1536&bih=706#imgrc=KSuxUC9PhUMzdM:.png)
-```
 
+With the processes I have just outlined, in theory the population cannot fall into a [local optimum](https://thinkingandcomputing.com/posts/genetic-algorithms-neural-networks.html) indefinitely since individuals are randomly selected and added to each generation. However, in practice, a population is considered to have converged if there is no further improvement after a few generations. Several populations can be relaunched and the stability of the best individuals obtained can be verified (or not). But I will simply choose to define a number of generations to be reached. 
+
+
+## Pseudo Code
+
+```
+Set varaiables and parameters
+Generate the genesis population
+While the maximum iteration isn't reached
+    Calculate each individuals costs and sort the generation
+    Selection (with elitism selection)
+    Crossover (with 4-points crossover)
+    Mutation (with personnnal mutation (might have a name))
+    Return the best individual found
 ```
 
 ## Let's start with python
