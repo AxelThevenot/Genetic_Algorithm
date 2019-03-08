@@ -1,6 +1,6 @@
 ## Genetic Algorithm principle
 
-The genetic algorithms (GA) are evolutionnary algorithms inspired by [Darwin's theory](https://www.darwins-theory-of-evolution.com/). This theory is about the evolution of species. According to him, animal and plant species had to change to survive, adapting to changes in their environment. Only those who survive have descendants, this is called natural selection. The GA's goal is to obtain an approximate solution to an optimization problem, when there is no exact method (or if the solution is unknown) to solve it in a reasonable time.
+The genetic algorithms (GA) are evolutionnary algorithms inspired by [Darwin's theory](https://www.darwins-theory-of-evolution.com/). This theory is about the evolution of species. According to him, animal and plant species had to change to survive, adapting their changes in their environment. Only those who survive have descendants, this is called natural selection. The GA's goal is to obtain an approximate solution to an optimization problem, when there is no exact method (or if the solution is unknown) to solve it in a reasonable time.
 That is what we will try to implement taking the example of the famous Travelling Salesman Problem
 
 ## Travelling salesman problem (TSP)
