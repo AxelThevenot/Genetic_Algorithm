@@ -17,7 +17,7 @@ To answer a problem, each individual has a cost or a fitness. These two are simi
 
 ![](Evolution.png)
 
-First of all there is the selection process. It is a selection according to the best individuals of a generation.
+Firstly there is the selection process. It is a selection according to the best individuals of a generation.
 The selection process in an algorithm can be done by several ways :
 * Proportionate to the cost/fitness : each individual has a weight proportionate to its cost or fitness. The selection is done by choosing randmly individuals according to their weigth. It is an usual way to do the selection. Yet this selection process in some case can approach [local optimum](https://thinkingandcomputing.com/posts/genetic-algorithms-neural-networks.html) without reaching the global one.
 * Proportionate to the rank : this process is really similar to the previous one. It sorts the individuals according to their cost or fitness. The each individuals has a weight proportionate to their rank. The worst has a 1 weight, the second worst has a 2 weight, ..., the best has a N weight.
@@ -36,14 +36,17 @@ The last process is the mutation. There is also different cases depending of the
 
 ## Biology in our program
 
-individuals paragraph
+In this section I will explain what are the processes and the variables I choose to resolve the TSP.
 
-population paragraph
+First of all, the individuals here are a route linked the `N_POINT`. The population of size `SIZE_POPULATION` is a list of route individuals. For this case, we will use a cost calculation instead of fitness calculation as we don't know what the best result is. 
 
-cost or fitness ? paragraph
+Secondly, to get from the n generation to the (n+1) generation :
+* Selection : I hesitated between the selction by rank or by eletism. I choose the elitism process as in this problem there is a lot of calculation needed. The elistism process is worth but speeder.
+* Crossover : it will be a 4-points crossover 
+* Mutation : I didn't choose one of the process explained above. For the mutation process on an individual, a random limit gene will be chosen. The mutate the two parts of the individual are interchanged as shown below. 
 
 
-mutation paragraphe
+![}(Mutation.png)
 
 
 With the processes I have just outlined, in theory the population cannot fall into a [local optimum](https://thinkingandcomputing.com/posts/genetic-algorithms-neural-networks.html) indefinitely since individuals are randomly selected and added to each generation. However, in practice, a population is considered to have converged if there is no further improvement after a few generations. Several populations can be relaunched and the stability of the best individuals obtained can be verified (or not). But I will simply choose to define a number of generations to be reached. 
