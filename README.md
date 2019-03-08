@@ -46,7 +46,7 @@ Secondly, to get from the n generation to the (n+1) generation :
 * Mutation : I didn't choose one of the process explained above. For the mutation process on an individual, a random limit gene will be chosen. The mutate the two parts of the individual are interchanged as shown below. 
 
 
-![}(Mutation.png)
+![](Mutation.png)
 
 
 With the processes I have just outlined, in theory the population cannot fall into a [local optimum](https://thinkingandcomputing.com/posts/genetic-algorithms-neural-networks.html) indefinitely since individuals are randomly selected and added to each generation. However, in practice, a population is considered to have converged if there is no further improvement after a few generations. Several populations can be relaunched and the stability of the best individuals obtained can be verified (or not). But I will simply choose to define a number of generations to be reached. 
