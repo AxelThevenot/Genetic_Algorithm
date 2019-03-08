@@ -5,18 +5,18 @@ from population import *
 
 # region variables
 SIZE_PLOT = 10
-DISPLAY_GENERATION = 20  # Display the best individuals each DISPLAY_GENERATION
-N_POINT = 100  # Number of point to link
-SIZE_POPULATION = 1000  # Size of each population
-MAX_GENERATION = 2500  # Stop running at MAX_GENERATION
+DISPLAY_GENERATION = 5  # Display the best individuals each DISPLAY_GENERATION
+N_POINT = 30  # Number of point to link
+SIZE_POPULATION = 150  # Size of each population
+MAX_GENERATION = 500  # Stop running at MAX_GENERATION
 # each new generation is composed by :
 # --> RATIO_SELECTION of the best individuals in the previous generation
-# --> RATIO_CROSSBREEDING of children of the best individuals children
+# --> RATIO_CROSSOVER of children of the best individuals children
 # --> The rest is new random individuals to minimize the chance to be in a local minimum
 RATIO_SELECTION = 0.3
-RATIO_CROSSBREEDING = 0.65
+RATIO_CROSSOVER = 0.65
 # each new generation is subject to a RATIO_MUTATION
-RATIO_MUTATION = 0.4
+RATIO_MUTATION = 0.7
 
 # Initialize the first randomized population
 population = randomPopulation(SIZE_POPULATION, SIZE_PLOT, N_POINT)
@@ -45,8 +45,10 @@ def display():
     ax.clear()
     axGen.clear()
 
-    # actualize fig title
+    # actualize plot title and axes labels
     ax.set_title("Generation : {0}".format(generation_count))
+    axGen.set_xlabel("Generation")
+    axGen.set_ylabel("best cost")
     # Ask for the best cost in two vectors (X coord and Y coord)
     X, Y = population.best.toXY()
 
@@ -85,7 +87,7 @@ def nextGeneration(frame_number):
     if started:
         global generation_count
         while generation_count < MAX_GENERATION:
-            population.nextGeneration(RATIO_SELECTION, RATIO_CROSSBREEDING, RATIO_MUTATION)
+            population.nextGeneration(RATIO_SELECTION, RATIO_CROSSOVER, RATIO_MUTATION)
             generation_count += 1
             costs.append(population.best.cost)  # actualize the best costs array
             # then display the new update
