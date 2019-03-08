@@ -49,9 +49,9 @@ class Individual:
             cost += distance(self.points[i], self.points[(i + 1)])
         return cost
 
-    def breedWith(self, other):
+    def crossWith(self, other):
         """
-        breed self with other as a 4-points crossover
+        cross self with other as a 4-points crossover
         :param other: other individuals
         :return: child
         """
