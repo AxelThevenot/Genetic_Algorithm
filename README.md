@@ -379,7 +379,7 @@ def key_pressed(event):
         started = not started
 ```
 
-The `nextGeneration()` waits for the start and throw the displaying function.
+The `nextGeneration()` function waits for the start and throw the displaying function.
 
 ```python
 def nextGeneration(frame_number):
@@ -399,7 +399,7 @@ def nextGeneration(frame_number):
         figGen.canvas.draw()
 ```
 
-Each function are completed. We can now run the code. 
+Each function is completed. We can now run the code. 
 
 ```python
 if __name__ == "__main__":
