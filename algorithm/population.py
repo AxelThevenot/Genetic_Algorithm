@@ -1,101 +1,82 @@
-from individual import *
+import random
 
+class Individual:
 
-class Population:
+    def __init__(self, _points):
+        """
+        Initialize a individual from a list of point
+        :param _points: list of point the individual is made from
+        """
+        self.points = [list(point) for _, point in enumerate(_points)]
+        self.cost = self.costFunction()
 
-    def __init__(self, size, pointList):
+    def toXY(self):
         """
-        Initialize population of size individuals from a pointList
-        :param size: size of the population
-        :param pointList: pointList from which the individuals are made from
+        to return X and Y array of coordinates to plot the individual
+        :return: X coordinates, Y coordinates
         """
-        self.size = size
-        # randomly create individuals from pointList
-        self.individuals = [Individual(random.sample(pointList, len(pointList)))
-                                       for _ in range(self.size)]
-        self.best = self.individuals[0]
+        # isolate the X and the Y array to return them
+        X = [self.points[p][0] for p in range(len(self.points))]
+        Y = [self.points[p][1] for p in range(len(self.points))]
+        # as the starting point is (0, 0) point, we are looking to the first nearest point
+        minDistance = {"index": 0, "distance": X[0] ** 2 + Y[0] ** 2}  # dictionary to easy use
+        for i in range(len(X)):
+            distance_i = X[i] ** 2 + Y[i] ** 2  # take the distance from (0, 0) f each point
+            if distance_i < minDistance["distance"]:  # compare to the best point already found
+                # replace it if there is a new nearest point from (0, 0)
+                minDistance["index"] = i
+                minDistance["distance"] = distance_i
 
-    def sort(self):
-        """
-        sort the individuals according to their cost
-        """
-        self.individuals.sort(key=lambda individual: individual.cost)
-        # change the best individuals if the new best one beats the latest one
-        if self.best.cost >= self.individuals[0].cost:
-            self.best = self.individuals[0]
+        # surround X, Y by the starting point (0, 0), which is also the ending point
+        X = [0] + X[minDistance["index"]:] + X[:minDistance["index"]] + [0]
+        Y = [0] + Y[minDistance["index"]:] + Y[:minDistance["index"]] + [0]
+        return X, Y
 
     # region genetic
-    def selection(self, ratio_selection):
+    def costFunction(self):
         """
-        The selection here is to keep the ratio_selection% bests
-        :param ratio_selection: selection ratio interested in
+        Calculate the distance needed to link each point
+        :return:
         """
-        self.individuals = [self.individuals[individual]
-                            for individual in range(int(ratio_selection*len(self.individuals)))]
 
-    def crossbreeding(self, ratio_crossbreeding, ratio_selection):
-        """
-        Crossbreed the selected individuals
-        :param ratio_crossbreeding: child ratio from crossbreeding interested in
-        :param ratio_selection: selection ratio interested in
-        """
-        # count the number of parents after the selection
-        potential_parent_count = int(ratio_selection * self.size - 1)
-        for _ in range(int(ratio_crossbreeding * self.size)):
-            # select a first parent
-            parent_1_index = random.randint(0,potential_parent_count)
-            # select a second parent (different than the first one)
-            parent_2_index = random.randint(0,potential_parent_count)
-            # verify they are different or change the second parent
-            while parent_1_index == parent_2_index:
-                parent_2_index = random.randint(0, potential_parent_count)
-            self.individuals.append(self.individuals[parent_1_index].breedWith(self.individuals[parent_2_index]))
+        # only create the distance function between two points (Pythagoras)
+        def distance(point_1, point_2):
+            return (point_1[0] - point_2[0]) ** 2 + (point_1[1] - point_2[1]) ** 2
 
-    def newIndividuals(self):
-        """
-        Create a random new Individual while the population size is not equal to the size chosen
-        """
-        while len(self.individuals) < self.size:
-            points = self.individuals[0].points
-            new_individual = Individual(random.sample(points, len(points)))
-            self.individuals.append(new_individual)
+        # and sum the distances between each point to have the cost value
+        cost = 0
+        for i in range(len(self.points) - 1):
+            cost += distance(self.points[i], self.points[(i + 1)])
+        return cost
 
+    def crossWith(self, other):
+        """
+        cross self with other as a 4-points crossover
+        :param other: other individuals
+        :return: child
+        """
+        # select randomly the 4-point of te crossover
+        genes = [random.randint(0, len(self.points) - 1) for _ in range(4)]
+        genes.sort()  # sort them for the use
 
-    def mutation(self, ratio_mutation):
-        """
-        Mutate randomly the population according to the ratio chosen
-        :param ratio_mutation: mutation ratio interested in
-        """
-        for _ in range(int(ratio_mutation * self.size)):
-            # select a random individual
-            individual_index = random.randint(0, self.size - 1)
-            self.individuals[individual_index].mutate()
+        points_from_self = self.points[genes[0]:genes[1]]  # first part of self's points
+        points_from_self += self.points[genes[2]:genes[3]]  # second part of self's points
+        # looking for the missing points
+        points_from_other = [point for _, point in enumerate(other.points) if point not in points_from_self]
 
+        # add the parent's point to create the child's list of point
+        child_points = points_from_self + points_from_other
+        return Individual(child_points)
 
-    def nextGeneration(self, ratio_selection, ratio_crossbreeding, ratio_mutation):
+    def mutate(self):
         """
-        Next generation process
-        :param ratio_selection: selection ratio interested in
-        :param ratio_crossbreeding: child ratio from crossbreeding interested in
-        :param ratio_mutation: mutation ratio interested in
+        mutate an individual
         """
-        self.sort()  # sort the individuals according to their cost
-        self.selection(ratio_selection)  # selection process according to the ratio chosen
-        self.crossbreeding(ratio_crossbreeding, ratio_selection)  # crossbreeding process according to the ratio chosen
-        self.newIndividuals()  # create new individuals if needed
-        self.mutation(ratio_mutation)  # mutation process according to the ratio chosen
+        # select a random gene
+        rand_index = random.randint(0, len(self.points) - 1)
+        # mutate [a, b, c, d, e, f, g] with rand_index = 2 become [c, d, e, f, g, a, b,]
+        point_mutated = self.points[rand_index:]  # [c, d, e, f, g] in the example
+        point_mutated += self.points[:rand_index]  # add [a, b] in the example
+        self.points = point_mutated[:]
     # endregion
 
-
-def randomPopulation(size_population, size_plot, n_point):
-    """
-    Create a new random population
-    :param size_population: size of population
-    :param size_plot: size of the plot side
-    :param n_point: number of point each individuals is made from
-    :return: population created
-    """
-    # create a random array of point to define a new individual
-    points = [(random.random() * size_plot, random.random() * size_plot)
-              for _ in range(n_point)]
-    return Population(size_population, points)
