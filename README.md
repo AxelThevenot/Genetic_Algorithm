@@ -7,7 +7,7 @@ That is what we will try to implement a GA taking the example of the famous Trav
 
 The [Travelling Salesman Problem](https://en.wikipedia.org/wiki/Travelling_salesman_problem) is easy to understand. The goal is to find the best route (with the shortest distance) linking all the points the salesman wants to visit. The salesman begins from a starting point and comes back to it (here purple on the GIF below). Yet it is a hard task to solve the problem by trying each possibility. For example, to find the best route to link 100 points, there are 9.332622e+157 possibilities. To be more precise there are 93 326 215 443 944 152 681 699 238 856 266 700 490 715 968 264 381 621 468 592 963 895 217 599 993 229 915 608 941 463 976 156 518 286 253 697 920 827 223 758 251 185 210 916 864 000 000 000 000 000 000 000 000 possibilities. As a comparaison, the estimate age of the universe is 4,320432e+17 seconds. So we can infer that the solution is impossible to find (at a human time scale). Therefore, we will try to approximate the shortest route as shown in the GIF below. There is a GA for the TSP of 100 points and that is working... Staggering ! So thank you nature for inspiring us. 
 
-![TSP for 100 points](100points.gif)
+![TSP for 100 points](/src/100points.gif)
 
 ## IT and biology mingle
 
@@ -15,7 +15,7 @@ As I said, the GA are evolutionary algorithms inspired by the biology. The princ
 
 To answer a problem, each individual has a cost or a fitness. Those two are similar inherently but different in the way we see them. For example in the TSP case, we will talk about costs as we are interested in how much the route costs (in distance). On the contrary, in a craking-password case, we will be interested in how much the string found fits with the password, so we talk about fitness.
 
-![](Evolution.png)
+![](/src/Evolution.png)
 
 The first step in GA is the selection process. It is a selection according to the best individuals of a generation.
 The selection process can be done in several ways :
@@ -46,7 +46,7 @@ Secondly, to get from the n generation to the (n+1) generation :
 * Mutation : I did not choose one of the processes explained above. For the mutation process on an individual, a random limit gene will be chosen. The mutate individual has two interchanged parts as shown below. 
 
 
-![](Mutation.png)
+![](/src/Mutation.png)
 
 
 With those processes, in theory, the population cannot fall into a [local optimum](https://thinkingandcomputing.com/posts/genetic-algorithms-neural-networks.html) indefinitely since individuals are randomly selected and added to each generation. However, in practice, a population is considered has having converged if there is no further improvement after a few generations. Several populations can be relaunched and the stability of the best individuals obtained can be verified (or not). But I will simply choose to define a number `MAX_GENERATION` of generations to be reached.
